@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ResortPlay.Entity
 {
-    internal class AccomodationType
+    public class AccomodationType
     {
+        public int Id { get; set; }
+        public string Name { get; set; } //Hotel Room, aparment room
+        public string Description { get; set; } //Description for the hotel room or apartment
     }
 }

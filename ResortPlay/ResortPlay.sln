@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResortPlay", "ResortPlay.csproj", "{63333E64-8754-4280-8EE0-E201FAEB97A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResortPlay.Entity", "..\ResortPlay.Entity\ResortPlay.Entity.csproj", "{171DC578-1E42-47E1-B947-94DB9054971C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{63333E64-8754-4280-8EE0-E201FAEB97A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63333E64-8754-4280-8EE0-E201FAEB97A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63333E64-8754-4280-8EE0-E201FAEB97A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{171DC578-1E42-47E1-B947-94DB9054971C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{171DC578-1E42-47E1-B947-94DB9054971C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{171DC578-1E42-47E1-B947-94DB9054971C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{171DC578-1E42-47E1-B947-94DB9054971C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
