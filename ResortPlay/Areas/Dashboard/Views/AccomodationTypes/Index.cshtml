@@ -17,15 +17,17 @@
         <div class="input-group">
             <input type="text" class="form-control" placeholder="Search for...">
             <div class="input-group-append">
-                <button class="btn btn-outline-primary" type="button">Search</button>
-                <button class="btn btn-outline-secondary" type="button">Reset</button>
-                <button id="createbutton" type="button" class="btn btn-success" data-toggle="modal" data-target="#popupWindow">
-                    Create
+                <button class="btn btn-outline-primary" type="button"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                <button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-arrows-rotate"></i> Reset</button>
+                <button data-href="@Url.Action("Action", "AccomodationTypes")" type="button" class="data-btn btn btn-success" data-toggle="modal" data-target="#popupWindow">
+                     Create <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
         </div>
     </div>
 </div>
+<!-- The Partial View of Listing -->
+
 <div class="row">
     <div class="col col-lg-12">
         @{ Html.RenderAction("Listing"); }
@@ -37,19 +39,19 @@
 <!-- Popup when click on Create button -->
 
 <div class="modal fade" id="popupWindow" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-
-    </div>
+    <div class="modal-dialog" role="document"></div>
 </div>
 
+<!-- script for the popup windows -->
 
 <script>
-    $("#createbutton").click(function () {
+    $(".data-btn").click(function () {
         $.ajax({
-            url: '@Url.Action("Action", "AccomodationTypes")'
+            url: $(this).attr("data-href"),
         })
             .done(function (response) {
                 $("#popupWindow .modal-dialog").html(response);
             });
     });
+
 </script>

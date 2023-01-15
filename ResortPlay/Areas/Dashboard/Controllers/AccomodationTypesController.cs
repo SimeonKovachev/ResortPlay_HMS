@@ -25,22 +25,51 @@ namespace ResortPlay.Areas.Dashboard.Controllers
             return PartialView("_Listing", model);
         }
         [HttpGet]
-        public ActionResult Action()
+        public ActionResult Action(int? Id)
         {
             AccomodationTypeActionModel model = new AccomodationTypeActionModel();
+
+            if (Id.HasValue) //Edit a record
+            {
+                var accomodationType = accomodationTypesService.GetAccomodationTypeById(Id.Value);
+
+                model.Id = accomodationType.Id;
+                model.Name= accomodationType.Name;
+                model.Description= accomodationType.Description;
+
+            }
+            
+
             return PartialView("_Action", model);
+
+
         }
         [HttpPost]
         public JsonResult Action(AccomodationTypeActionModel model)
         {
+
             JsonResult json = new JsonResult();
+            var result = false;
 
-            AccomodationType accomodationType = new AccomodationType();
+            if (model.Id > 0) //Edit a record
+            {
+                var accomodationType = accomodationTypesService.GetAccomodationTypeById(model.Id);
 
-            accomodationType.Name= model.Name;
-            accomodationType.Description= model.Description;
+                accomodationType.Name= model.Name;
+                accomodationType.Description = model.Description;
+                result = accomodationTypesService.EditAccomodationTypes(accomodationType);
 
-            var result = accomodationTypesService.SaveAccomodationTypes(accomodationType);
+            }
+            else //Create a record
+            {
+
+                AccomodationType accomodationType = new AccomodationType();
+
+                accomodationType.Name = model.Name;
+                accomodationType.Description = model.Description;
+
+                result = accomodationTypesService.SaveAccomodationTypes(accomodationType);
+            }
 
             if (result)
             {
@@ -48,7 +77,7 @@ namespace ResortPlay.Areas.Dashboard.Controllers
             }
             else
             {
-                json.Data = new { Success = false, Message = "Unable to add Accomodation Type." };
+                json.Data = new { Success = false, Message = "Unable to perform action on Accomodation Type." };
             }
             
 

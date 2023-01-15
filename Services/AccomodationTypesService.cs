@@ -14,13 +14,27 @@ namespace Services
         {
             var context = new ResortPlayContext();
 
-            return context.AccomodationTypes;
+            return context.AccomodationTypes.ToList();
+        }
+        public AccomodationType GetAccomodationTypeById(int Id)
+        {
+            var context = new ResortPlayContext();
+
+            return context.AccomodationTypes.Find(Id);
         }
         public bool SaveAccomodationTypes(AccomodationType accomodationType)
         {
             var context = new ResortPlayContext();
 
             context.AccomodationTypes.Add(accomodationType);
+            return context.SaveChanges() > 0;
+        }
+        public bool EditAccomodationTypes(AccomodationType accomodationType)
+        {
+            var context = new ResortPlayContext();
+
+            context.Entry(accomodationType).State = System.Data.Entity.EntityState.Modified;
+
             return context.SaveChanges() > 0;
         }
         public bool DeleteAccomodationTypes(AccomodationType accomodationType)
