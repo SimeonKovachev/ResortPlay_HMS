@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace ResortPlay.Areas.Dashboard.Controllers
 {
+    //[Authorize(Roles = "Administrator")]
     public class DashboardController : Controller
     {
         // GET: Dashboard/Dashboard

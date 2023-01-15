@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResortPlay.Entity", "..\Res
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResortPlay.Data", "..\ResortPlay.Data\ResortPlay.Data.csproj", "{0FE495F0-6B59-451E-B916-5A50DA09165A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "..\Services\Services.csproj", "{222683D1-ACDD-45FB-9109-580A9BBCF0C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{0FE495F0-6B59-451E-B916-5A50DA09165A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FE495F0-6B59-451E-B916-5A50DA09165A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FE495F0-6B59-451E-B916-5A50DA09165A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{222683D1-ACDD-45FB-9109-580A9BBCF0C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{222683D1-ACDD-45FB-9109-580A9BBCF0C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{222683D1-ACDD-45FB-9109-580A9BBCF0C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{222683D1-ACDD-45FB-9109-580A9BBCF0C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
