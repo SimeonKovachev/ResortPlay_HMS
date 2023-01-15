@@ -23,5 +23,13 @@ namespace Services
             context.AccomodationTypes.Add(accomodationType);
             return context.SaveChanges() > 0;
         }
+        public bool DeleteAccomodationTypes(AccomodationType accomodationType)
+        {
+            var context = new ResortPlayContext();
+
+            context.AccomodationTypes.Remove(accomodationType);
+            return context.SaveChanges() > 0;
+        }
+
     }
 }
