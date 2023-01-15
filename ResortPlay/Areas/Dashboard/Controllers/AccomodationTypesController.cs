@@ -12,18 +12,18 @@ namespace ResortPlay.Areas.Dashboard.Controllers
     public class AccomodationTypesController : Controller
     {
         AccomodationTypesService accomodationTypesService = new AccomodationTypesService();
-        public ActionResult Index()
-        {
-            return View();
-        }
-        public ActionResult Listing()
+        public ActionResult Index(string searchTerm)
         {
             AccomodationTypesListingModel model = new AccomodationTypesListingModel();
 
-            model.AccomodationTypes = accomodationTypesService.GetAllAccomodationTypes();
+            model.SearchTerm = searchTerm;
 
-            return PartialView("_Listing", model);
+            model.AccomodationTypes = accomodationTypesService.SearchAccomodationTypes(searchTerm);
+
+            return View(model);
         }
+
+        //Here to Read from the model the chosen accomodation
         [HttpGet]
         public ActionResult Action(int? Id)
         {
@@ -44,6 +44,8 @@ namespace ResortPlay.Areas.Dashboard.Controllers
 
 
         }
+
+        //Here to make an action on the chosen accomodation
         [HttpPost]
         public JsonResult Action(AccomodationTypeActionModel model)
         {
@@ -57,6 +59,7 @@ namespace ResortPlay.Areas.Dashboard.Controllers
 
                 accomodationType.Name= model.Name;
                 accomodationType.Description = model.Description;
+
                 result = accomodationTypesService.EditAccomodationTypes(accomodationType);
 
             }
@@ -83,5 +86,42 @@ namespace ResortPlay.Areas.Dashboard.Controllers
 
             return json;
         }
+
+        //Here is to Delete the accomodation
+
+        [HttpGet]
+        public ActionResult Delete(int Id)
+        {
+            AccomodationTypeActionModel model = new AccomodationTypeActionModel();
+
+            var accomodationType = accomodationTypesService.GetAccomodationTypeById(Id);
+
+            model.Id = accomodationType.Id;
+         
+            return PartialView("_Delete", model);
+
+        }
+        [HttpPost]
+        public JsonResult Delete(AccomodationTypeActionModel model)
+        {
+            JsonResult json = new JsonResult();
+            var result = false;
+
+            var accomodationType = accomodationTypesService.GetAccomodationTypeById(model.Id);
+            result = accomodationTypesService.DeleteAccomodationTypes(accomodationType);
+
+            if (result)
+            {
+                json.Data = new { Success = true };
+            }
+            else
+            {
+                json.Data = new { Success = false, Message = "Unable to perform action on Accomodation Type." };
+            }
+            return json;
+        }
+
+
+
     }
 }

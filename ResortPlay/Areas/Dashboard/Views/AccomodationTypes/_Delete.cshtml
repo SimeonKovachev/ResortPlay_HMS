@@ -10,14 +10,7 @@
         <div class="modal-header">
 
             <h5 class="modal-title">
-                @if (Model.Id > 0)
-                {
-                    <span>Editing an element</span>
-                }
-                else
-                { 
-                    <span>Adding an element</span>
-                }
+              <span>Delete Accomodation Type</span>
             </h5>
 
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -27,27 +20,19 @@
         </div>
         <div class="modal-body">
 
-            <form id="addForm">
+            <form id="deleteForm">
                 <input type="hidden" name="Id" value="@Model.Id" />
-                <div class="form-group">
-                    <label>Name</label>
-                    <input class="form-control" name="Name" placeholder="Enter Name.." value="@Model.Name">
+
+                <div class="alert alert-danger" role="alert">
+                    Are you sure you want to delete this element?
                 </div>
 
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea class="form-control" name="Description" placeholder="Enter Description..">@Model.Description</textarea>
-                </div>
             </form>
-
-            <div class="errorDiv">
-                
-            </div>
 
         </div>
         <div class="modal-footer">
-            <button id="addButton" type="button" class="btn btn-primary">Save <i class="fa-regular fa-floppy-disk"></i></button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close <i class="fa-solid fa-xmark"></i></button>
+            <button id="deleteButton" type="button" class="btn btn-danger">Delete  <i class="fa-solid fa-trash-can"></i></button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
         </div>
     </div>
@@ -55,18 +40,17 @@
 
 
 <script>
-    $("#addButton").click(function () {
+    $("#deleteButton").click(function () {
          $.ajax({
-             url: '@Url.Action("Action", "AccomodationTypes")',
+             url: '@Url.Action("Delete", "AccomodationTypes")',
              type: "post",
-             data: $("#addForm").serialize()
+             data: $("#deleteForm").serialize()
         })
              .done(function (response) {
-                 
                 if (response.Success)
                 {
                     //data is saved.. reload listing
-                    location.reload();
+                   window.location.href = "@Url.Action("Index", "AccomodationTypes")";
                 }
                 else
                 {
@@ -75,6 +59,7 @@
             });
     });
 </script>
+
 
 
 

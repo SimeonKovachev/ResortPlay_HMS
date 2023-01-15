@@ -2,36 +2,37 @@
 
 @if (Model != null && Model.AccomodationTypes != null && Model.AccomodationTypes.Count() > 0)
 {
-    <table class="table table-striped table-dark">
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach (var accomodationType in Model.AccomodationTypes)
-            {
+    <div class="table-responsive-md">
+        <table class="table table-striped table-dark table-hover">
+            <thead>
                 <tr>
-                    <td>@accomodationType.Name</td>
-                    <td>@accomodationType.Description</td>
-                    <td>
-                        <!--Edit button-->
-                        <button data-href="@Url.Action("Action", "AccomodationTypes", new {ID = accomodationType.Id })" type="button" class="data-btn btn btn-warning" data-toggle="modal" data-target="#popupWindow" aria-pressed="false" autocomplete="off">
-                            Edit <i class="fa-solid fa-pen-nib"></i>
-                        </button>
-                        <!--Delete button-->
-                        <button type="button" class="btn btn-danger" data-toggle="button" aria-pressed="false" autocomplete="off">
-                            Delete <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </td>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
                 </tr>
+            </thead>
+            <tbody>
 
-            }
-        </tbody>
-    </table>
+                @foreach (var accomodationType in Model.AccomodationTypes)
+                {
+                    <tr>
+                        <td>@accomodationType.Name</td>
+                        <td>@accomodationType.Description</td>
+                        <td>
+                            <!--Edit button-->
+                            <button data-href="@Url.Action("Action", "AccomodationTypes", new {ID = accomodationType.Id })" type="button" class="data-btn btn btn-warning" data-toggle="modal" data-target="#popupWindow" aria-pressed="false" autocomplete="off">
+                                Edit <i class="fa-solid fa-pen-nib"></i>
+                            </button>
+                            <!--Delete button-->
+                            <button data-href="@Url.Action("Delete", "AccomodationTypes", new {ID = accomodationType.Id })" type="button" class="data-btn btn btn-danger" data-toggle="modal" data-target="#popupWindow" aria-pressed="false" autocomplete="off">
+                                Delete <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 
 else
