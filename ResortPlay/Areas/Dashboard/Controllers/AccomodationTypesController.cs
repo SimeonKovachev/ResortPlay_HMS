@@ -22,7 +22,6 @@ namespace ResortPlay.Areas.Dashboard.Controllers
 
             return View(model);
         }
-
         //Here to Read from the model the chosen accomodation
         [HttpGet]
         public ActionResult Action(int? Id)
@@ -44,7 +43,6 @@ namespace ResortPlay.Areas.Dashboard.Controllers
 
 
         }
-
         //Here to make an action on the chosen accomodation
         [HttpPost]
         public JsonResult Action(AccomodationTypeActionModel model)
@@ -86,9 +84,7 @@ namespace ResortPlay.Areas.Dashboard.Controllers
 
             return json;
         }
-
         //Here is to Delete the accomodation
-
         [HttpGet]
         public ActionResult Delete(int Id)
         {

@@ -17,7 +17,6 @@ namespace Services
 
             return context.AccomodationTypes.AsEnumerable();
         }
-
         //Search in data table
         public IEnumerable<AccomodationType> SearchAccomodationTypes(string searchTerm)
         {
@@ -32,8 +31,6 @@ namespace Services
 
             return accomodationTypes.AsEnumerable();
         }
-
-
         //GetById service
         public AccomodationType GetAccomodationTypeById(int Id)
         {
@@ -49,7 +46,6 @@ namespace Services
             context.AccomodationTypes.Add(accomodationType);
             return context.SaveChanges() > 0;
         }
-
         //Edit Service
         public bool EditAccomodationTypes(AccomodationType accomodationType)
         {
@@ -59,7 +55,6 @@ namespace Services
 
             return context.SaveChanges() > 0;
         }
-
         //Delete service
         public bool DeleteAccomodationTypes(AccomodationType accomodationType)
         {

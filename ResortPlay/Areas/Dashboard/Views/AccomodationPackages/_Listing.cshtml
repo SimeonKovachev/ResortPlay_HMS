@@ -1,0 +1,45 @@
+﻿@model ResortPlay.Areas.Dashboard.ViewModels.AccomodationPackagesListingModel
+
+@if (Model != null && Model.AccomodationPackages != null && Model.AccomodationPackages.Count() > 0)
+{
+    <div class="table-responsive-md">
+        <table class="table table-striped table-dark table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Rooms</th>
+                    <th scope="col">Fee Per Night</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var accomodationPackage in Model.AccomodationPackages)
+                {
+                    <tr>
+                        <td>@accomodationPackage.Name</td>
+                        <td>@accomodationPackage.NoOfRooms</td>
+                        <td>@accomodationPackage.FeePerNight</td>
+                        <td>
+                            <!--Edit button-->
+                            <button data-href="@Url.Action("Action", "AccomodationPackages", new {ID = accomodationPackage.Id })" type="button" class="data-btn btn btn-warning" data-toggle="modal" data-target="#popupWindow" aria-pressed="false" autocomplete="off">
+                                Edit <i class="fa-solid fa-pen-nib"></i>
+                            </button>
+                            <!--Delete button-->
+                            <button data-href="@Url.Action("Delete", "AccomodationPackages", new {ID = accomodationPackage.Id })" type="button" class="data-btn btn btn-danger" data-toggle="modal" data-target="#popupWindow" aria-pressed="false" autocomplete="off">
+                                Delete <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+else
+{
+    <div class="alert alert-warning" role="alert">
+        Sorry! No added Accomodation Types yet, please add.
+    </div>
+}
