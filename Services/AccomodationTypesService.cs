@@ -15,7 +15,7 @@ namespace Services
         {
             var context = new ResortPlayContext();
 
-            return context.AccomodationTypes.AsEnumerable();
+            return context.AccomodationTypes.ToList();
         }
         //Search in data table
         public IEnumerable<AccomodationType> SearchAccomodationTypes(string searchTerm)
@@ -29,7 +29,7 @@ namespace Services
                 accomodationTypes = accomodationTypes.Where(a => a.Name.ToLower().Contains(searchTerm.ToLower()));
             }
 
-            return accomodationTypes.AsEnumerable();
+            return accomodationTypes.ToList();
         }
         //GetById service
         public AccomodationType GetAccomodationTypeById(int Id)

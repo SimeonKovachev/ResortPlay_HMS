@@ -1,5 +1,6 @@
 ﻿using ResortPlay.Areas.Dashboard.ViewModels;
 using ResortPlay.Entity;
+using ResortPlay.ViewModels;
 using Services;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,26 @@ namespace ResortPlay.Areas.Dashboard.Controllers
     public class AccomodationPackagesController : Controller
     {
         AccomodationPackagesService accomodationPackagesService = new AccomodationPackagesService();
-        public ActionResult Index(string searchTerm)
+        AccomodationTypesService accomodationTypesService = new AccomodationTypesService();
+
+        public ActionResult Index(string searchTerm, int? accomodationTypeId, int? page) //search by seartchterm and accomodation type by its id. Only gets int.  // The int page is for the pages each with 3 packages
         {
+            //how much packages will show at a time
+            int recordSize = 3;
+            page = page ?? 1;
+
             AccomodationPackagesListingModel model = new AccomodationPackagesListingModel();
-
+            //Word search
             model.SearchTerm = searchTerm;
+            //Type search
+            model.AccomodationTypeId = accomodationTypeId;
 
-            model.AccomodationPackages = accomodationPackagesService.SearchAccomodationPackages(searchTerm);
+            model.AccomodationPackages = accomodationPackagesService.SearchAccomodationPackages(searchTerm, accomodationTypeId, page.Value, recordSize);
+            model.AccomodationTypes = accomodationTypesService.GetAllAccomodationTypes();
 
+            //The pager controller
+            var totalRecords = accomodationPackagesService.SearchAccomodationPackagesCount(searchTerm, accomodationTypeId);
+            model.Pager = new Pager(totalRecords, page, recordSize);
             return View(model);
         }
 
@@ -34,16 +47,16 @@ namespace ResortPlay.Areas.Dashboard.Controllers
                 var accomodationPackage = accomodationPackagesService.GetAccomodationPackageById(Id.Value);
 
                 model.Id = accomodationPackage.Id;
+                model.AccomodationTypeId = accomodationPackage.AccomodationTypeId;
                 model.Name = accomodationPackage.Name;
                 model.NoOfRooms = accomodationPackage.NoOfRooms;
                 model.FeePerNight = accomodationPackage.FeePerNight;
 
             }
 
+            model.AccomodationTypes = accomodationTypesService.GetAllAccomodationTypes();
 
             return PartialView("_Action", model);
-
-
         }
         //Here to make an action on the chosen accomodation
         [HttpPost]
@@ -57,6 +70,7 @@ namespace ResortPlay.Areas.Dashboard.Controllers
             {
                 var accomodationPackage = accomodationPackagesService.GetAccomodationPackageById(model.Id);
 
+                accomodationPackage.AccomodationTypeId= model.AccomodationTypeId;
                 accomodationPackage.Name = model.Name;
                 accomodationPackage.NoOfRooms = model.NoOfRooms;
                 accomodationPackage.FeePerNight = model.FeePerNight;
@@ -70,6 +84,7 @@ namespace ResortPlay.Areas.Dashboard.Controllers
 
                 AccomodationPackage accomodationPackage = new AccomodationPackage();
 
+                accomodationPackage.AccomodationTypeId = model.AccomodationTypeId;
                 accomodationPackage.Name = model.Name;
                 accomodationPackage.NoOfRooms = model.NoOfRooms;
                 accomodationPackage.FeePerNight = model.FeePerNight;

@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col col-lg-12">
-        <h2>Accomodation Types</h2>
+        <h2>Accomodation Packages</h2>
         <hr />
     </div>
 </div>
@@ -17,7 +17,25 @@
     <div class="col col-lg-8">
         <form>
             <div class="input-group">
-                <input type="search" name="searchterm" class="form-control" placeholder="Search for..." value="@Model.SearchTerm" required>
+                <input type="search" name="searchterm" class="form-control" placeholder="Search for..." value="@Model.SearchTerm">
+
+                @if (Model.AccomodationTypes != null && Model.AccomodationTypes.Count() > 0)
+                {
+                    <select name="AccomodationTypeId" class="form-control">
+                        <option value="0">
+                            Select Type..
+                        </option>
+                        @foreach (var accomodationType in Model.AccomodationTypes)
+                        {
+                            <option value="@accomodationType.Id" @(accomodationType.Id == Model.AccomodationTypeId ? "selected" : string.Empty)>
+                                @accomodationType.Name
+                            </option>
+                        }
+                    </select>
+                }
+
+
+
                 <div class="input-group-append">
                     <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
                     <a class="btn btn-outline-secondary" href="@Url.Action("Index", "AccomodationPackages")"><i class="fa-solid fa-arrows-rotate"></i></a>

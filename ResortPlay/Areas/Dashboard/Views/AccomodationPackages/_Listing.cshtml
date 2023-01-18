@@ -7,8 +7,9 @@
             <thead>
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Rooms</th>
-                    <th scope="col">Fee Per Night</th>
+                    <th scope="col">Fee per Night</th>
+                    <th scope="col">Number of rooms</th>
+                    <th scope="col">Accomodation Type</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -18,8 +19,15 @@
                 {
                     <tr>
                         <td>@accomodationPackage.Name</td>
+                        <td>@accomodationPackage.FeePerNight$</td>
                         <td>@accomodationPackage.NoOfRooms</td>
-                        <td>@accomodationPackage.FeePerNight</td>
+                        <td>
+                            @if (accomodationPackage.AccomodationType != null)
+                            {
+                                @accomodationPackage.AccomodationType.Name
+                            }
+                        </td>
+
                         <td>
                             <!--Edit button-->
                             <button data-href="@Url.Action("Action", "AccomodationPackages", new {ID = accomodationPackage.Id })" type="button" class="data-btn btn btn-warning" data-toggle="modal" data-target="#popupWindow" aria-pressed="false" autocomplete="off">
@@ -35,6 +43,50 @@
             </tbody>
         </table>
     </div>
+
+    if (Model.Pager.EndPage > 1)
+    {
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                @if (Model.Pager.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "AccomodationPackages")">
+                            <i class="fa-solid fa-backward-fast"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "AccomodationPackages", new { page = Model.Pager.CurrentPage - 1, searchTerm = Model.SearchTerm, accomodationTypeID = Model.AccomodationTypeId })">
+                            <i class="fa-solid fa-backward"></i>
+                        </a>
+                    </li>
+                }
+
+                @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+                {
+                    <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
+                       <a class="page-link" href="@Url.Action("Index", "AccomodationPackages", new { page = page, searchTerm = Model.SearchTerm, accomodationTypeID = Model.AccomodationTypeId})">@page</a>
+                    </li>
+                }
+
+                @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "AccomodationPackages", new { page = Model.Pager.CurrentPage + 1, searchTerm = Model.SearchTerm, accomodationTypeID = Model.AccomodationTypeId })">
+                            <i class="fa-solid fa-forward"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "AccomodationPackages", new { page = Model.Pager.TotalPages, searchTerm = Model.SearchTerm, accomodationTypeID = Model.AccomodationTypeId })">
+                            <i class="fa-solid fa-forward-fast"></i>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+
+
 }
 
 else

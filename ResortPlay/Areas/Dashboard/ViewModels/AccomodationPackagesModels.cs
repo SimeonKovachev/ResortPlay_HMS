@@ -1,4 +1,5 @@
 ﻿using ResortPlay.Entity;
+using ResortPlay.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,11 @@ namespace ResortPlay.Areas.Dashboard.ViewModels
     public class AccomodationPackagesListingModel
     {
         public IEnumerable<AccomodationPackage> AccomodationPackages { get; set; }
+        public IEnumerable<AccomodationType> AccomodationTypes { get; set; }
         public string SearchTerm { get; set; }
+        public int? AccomodationTypeId { get; set; }
+
+        public Pager Pager { get; set; }
     }
     public class AccomodationPackageActionModel
     {
@@ -20,6 +25,8 @@ namespace ResortPlay.Areas.Dashboard.ViewModels
         public string Name { get; set; }
         public int NoOfRooms { get; set; }
         public decimal FeePerNight { get; set; }
+
+        public IEnumerable<AccomodationType> AccomodationTypes { get; set; }
     }
 
 }

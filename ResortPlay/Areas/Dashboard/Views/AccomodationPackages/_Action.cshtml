@@ -30,17 +30,30 @@
             <form id="addForm">
                 <input type="hidden" name="Id" value="@Model.Id" />
                 <div class="form-group">
+                    <label>Accomodation Type</label>
+                    <select class="form-control" name="AccomodationTypeId">
+                        @if (Model.AccomodationTypes != null)
+                        {
+                            foreach (var accomodationType in Model.AccomodationTypes)
+                            {
+                                <option value="@accomodationType.Id" @(accomodationType.Id == Model.AccomodationTypeId ? "selected" : string.Empty) >
+                                    @accomodationType.Name
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Name</label>
                     <input class="form-control" name="Name" placeholder="Enter Name.." value="@Model.Name">
                 </div>
-
                 <div class="form-group">
                     <label>Rooms</label>
-                    <input class="form-control" name="Rooms" placeholder="Enter number of rooms.." value="@Model.NoOfRooms">
+                    <input class="form-control" name="NoOfRooms" placeholder="Enter number of rooms.." value="@Model.NoOfRooms">
                 </div>
                 <div class="form-group">
                     <label>Fee per night</label>
-                    <input class="form-control" name="Fee" placeholder="Enter fee per night.." value="@Model.FeePerNight">
+                    <input class="form-control" name="FeePerNight" placeholder="Enter fee per night.." value="@Model.FeePerNight">
                 </div>
             </form>
 
@@ -52,7 +65,6 @@
         <div class="modal-footer">
             <button id="addButton" type="button" class="btn btn-primary">Save <i class="fa-regular fa-floppy-disk"></i></button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close <i class="fa-solid fa-xmark"></i></button>
-
         </div>
     </div>
 }

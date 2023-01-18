@@ -11,10 +11,12 @@ namespace ResortPlay.Entity
         public int Id { get; set; }
 
         public int AccomodationTypeId { get; set; }
-        public AccomodationType AccomodationType { get; set; }
+        public virtual AccomodationType AccomodationType { get; set; }
 
         public string Name { get; set; }
         public int NoOfRooms { get; set; }
         public decimal FeePerNight { get; set; }
+
+
     }
 }
