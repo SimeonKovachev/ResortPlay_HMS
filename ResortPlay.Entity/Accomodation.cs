@@ -11,7 +11,7 @@ namespace ResortPlay.Entity
         public int Id { get; set; }
 
         public int AccomodationPackageId { get; set; }
-        public AccomodationPackage AccomodationPackage { get; set; }
+        public virtual AccomodationPackage AccomodationPackage { get; set; }
 
         public string Name { get; set; }
         public string Description { get; set; }

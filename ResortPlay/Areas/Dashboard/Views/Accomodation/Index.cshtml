@@ -1,4 +1,4 @@
-﻿@model  ResortPlay.Areas.Dashboard.ViewModels.AccomodationPackagesListingModel
+﻿@model  ResortPlay.Areas.Dashboard.ViewModels.AccomodationListingModel
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col col-lg-12">
-        <h2>Accomodation Packages</h2>
+        <h2>Accomodations</h2>
         <hr />
     </div>
 </div>
@@ -19,16 +19,16 @@
             <div class="input-group">
                 <input type="search" name="searchterm" class="form-control" placeholder="Search for..." value="@Model.SearchTerm">
 
-                @if (Model.AccomodationTypes != null && Model.AccomodationTypes.Count() > 0)
+                @if (Model.AccomodationPackages != null && Model.AccomodationPackages.Count() > 0)
                 {
-                    <select name="AccomodationTypeId" class="form-control">
+                    <select name="AccomodationPackageId" class="form-control">
                         <option value="0">
                             Select Type..
                         </option>
-                        @foreach (var accomodationType in Model.AccomodationTypes)
+                        @foreach (var accomodationPackage in Model.AccomodationPackages)
                         {
-                            <option value="@accomodationType.Id" @(accomodationType.Id == Model.AccomodationTypeId ? "selected" : string.Empty)>
-                                @accomodationType.Name
+                            <option value="@accomodationPackage.Id" @(accomodationPackage.Id == Model.AccomodationPackageId ? "selected" : string.Empty)>
+                                @accomodationPackage.Name
                             </option>
                         }
                     </select>
@@ -38,10 +38,10 @@
 
                 <div class="input-group-append">
                     <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
-                    <a class="btn btn-outline-secondary" href="@Url.Action("Index", "AccomodationPackages")"><i class="fa-solid fa-arrows-rotate"></i></a>
+                    <a class="btn btn-outline-secondary" href="@Url.Action("Index", "Accomodation")"><i class="fa-solid fa-arrows-rotate"></i></a>
                 </div>
                 <div class="input-group-append ms-3">
-                    <button data-href="@Url.Action("Action", "AccomodationPackages")" type="button" class="data-btn btn btn-success" data-toggle="modal" data-target="#popupWindow">
+                    <button data-href="@Url.Action("Action", "Accomodation")" type="button" class="data-btn btn btn-success" data-toggle="modal" data-target="#popupWindow">
                         Create <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>
@@ -78,4 +78,6 @@
     });
 
 </script>
+
+
 
