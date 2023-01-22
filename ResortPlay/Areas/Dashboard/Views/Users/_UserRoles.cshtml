@@ -38,8 +38,8 @@
                                     @role.Name
                                 </td>
                                 <td>
-                                    <button data-href="@Url.Action("DeleteUserRole", "Users", new { ID = role.Id })" type="button" class="data-btn btn btn-danger" data-toggle="modal" data-target="#popupWindow" aria-pressed="false" autocomplete="off">
-                                        Delete <i class="fa-solid fa-trash-can"></i>
+                                    <button data-href="@Url.Action("UserRoleOperation", "Users", new {userId = Model.UserId, roleID = role.Id, isDelete = true })" type="button" class="btnRoleOperation btn btn-danger" aria-pressed="false" autocomplete="off">
+                                        Delete <i class="fa-solid fa-user-xmark"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -75,8 +75,8 @@
                                     @role.Name
                                 </td>
                                 <td>
-                                    <button data-href="@Url.Action("AssignUserRole", "Users", new { ID = role.Id })" type="button" class="data-btn btn btn-success" data-toggle="modal" data-target="#popupWindow" aria-pressed="false" autocomplete="off">
-                                        Assign <i class="fa-solid fa-plus"></i>
+                                    <button data-href="@Url.Action("UserRoleOperation", "Users", new {userId = Model.UserId, roleId = role.Id })" type="button" class="btnRoleOperation btn btn-success" aria-pressed="false" autocomplete="off">
+                                        Assign <i class="fa-solid fa-user-check"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -85,15 +85,9 @@
                 </table>
             }
 
-            else
-            {
-                <div class="alert alert-warning" role="alert">
-                    No roles available!
-                </div>
-            }
+           
         </div>
         <div class="modal-footer">
-            <button id="addButton" type="button" class="btn btn-primary">Save <i class="fa-regular fa-floppy-disk"></i></button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close <i class="fa-solid fa-xmark"></i></button>
         </div>
     </div>
@@ -101,22 +95,24 @@
 
 
 <script>
-    $("#addButton").click(function () {
-         $.ajax({
-             url: '@Url.Action("Action", "Users")',
-             type: "post",
-             data: $("#addForm").serialize()
+    $(".btnRoleOperation").click(function () {
+        $.ajax({
+            url: $(this).attr("data-href"),
+            type: "POST"
         })
-             .done(function (response) {
-
+            .done(function (response) {
                 if (response.Success)
                 {
-                    //data is saved.. reload listing
-                    location.reload();
+                    $.ajax({
+                        url: "@Url.Action("UserRoles", "Users", new {ID = Model.UserId })" ,
+                    })
+                        .done(function (response) {
+                            $("#popupWindow .modal-dialog").html(response);
+                        });
                 }
                 else
                 {
-                    $(".errorDiv").html(response.Message)
+                    alert(response.Message);
                 }
             });
     });

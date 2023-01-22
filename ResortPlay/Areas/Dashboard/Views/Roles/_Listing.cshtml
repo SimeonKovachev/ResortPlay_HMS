@@ -16,8 +16,11 @@
                 @foreach (var roles in Model.Roles)
                 {
                     <tr>
+                        <td>@roles.Id</td>
                         <td>@roles.Name</td>
-                        <td>@roles.Users.Count</td>
+                        <td><a href="@Url.Action("Index", "Users", new {roleId = roles.Id })">
+                            @roles.Users.Count
+                            </a></td>
                         <td>
                             <!--Edit button-->
                             <button data-href="@Url.Action("Action", "Roles", new {ID = roles.Id })" type="button" class="data-btn btn btn-warning" data-toggle="modal" data-target="#popupWindow" aria-pressed="false" autocomplete="off">

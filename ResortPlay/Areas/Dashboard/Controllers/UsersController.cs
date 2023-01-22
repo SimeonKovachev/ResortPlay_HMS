@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using ResortPlay.Areas.Dashboard.ViewModels;
 using ResortPlay.Entity;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace ResortPlay.Areas.Dashboard.Controllers
 {
@@ -65,29 +67,28 @@ namespace ResortPlay.Areas.Dashboard.Controllers
             RoleManager = roleManager;
         }
 
-        public ActionResult Index(string searchTerm, string roleId, int? page) //search by seartchterm and accomodation package by its id. Only gets int.  // The int page is for the pages each with 3 packages
+        public async Task<ActionResult> Index(string searchTerm, string roleId, int? page) 
         {
-            //how much accomodations will show at a time
+            //how much will show at a time
             int recordSize = 10;
             page = page ?? 1;
 
             UserListingModel model = new UserListingModel();
             //Word search
             model.SearchTerm = searchTerm;
-            //Type search
             model.RoleId = roleId;
             model.Roles = RoleManager.Roles.ToList();
 
-            model.Users = SearchUsers(searchTerm, roleId, page.Value, recordSize);
+            model.Users = await SearchUsers(searchTerm, roleId, page.Value, recordSize);
 
 
             //The pager controller
-            var totalRecords = SearchUsersCount(searchTerm, roleId);
+            var totalRecords = await SearchUsersCount(searchTerm, roleId);
             model.Pager = new Pager(totalRecords, page, recordSize);
             return View(model);
         }
         //Search Users
-        public IEnumerable<HMS_User> SearchUsers(string searchTerm, string roleId, int page, int recordSize)
+        public async Task<IEnumerable<HMS_User>> SearchUsers(string searchTerm, string roleId, int page, int recordSize)
         {
 
             var users = UserManager.Users.AsQueryable();
@@ -99,7 +100,10 @@ namespace ResortPlay.Areas.Dashboard.Controllers
 
             if (!string.IsNullOrEmpty(roleId))
             {
-                //users = users.Where(a => a.Email.ToLower().Contains(searchTerm.ToLower()));
+                var role = await RoleManager.FindByIdAsync(roleId);
+
+                var userIds = role.Users.Select(x => x.UserId).ToList();
+                users = users.Where(x => userIds.Contains(x.Id));
             }
             var skip = (page - 1) * recordSize;
           
@@ -107,7 +111,7 @@ namespace ResortPlay.Areas.Dashboard.Controllers
             return users.OrderBy(x => x.Email).Skip(skip).Take(recordSize).ToList();
         }
 
-        public int SearchUsersCount(string searchTerm, string roleId)
+        public async Task<int> SearchUsersCount(string searchTerm, string roleId)
         {
 
             var users = UserManager.Users.AsQueryable();
@@ -119,12 +123,13 @@ namespace ResortPlay.Areas.Dashboard.Controllers
 
             if (!string.IsNullOrEmpty(roleId))
             {
-                //users = users.Where(a => a.Email.ToLower().Contains(searchTerm.ToLower()));
+                var role = await RoleManager.FindByIdAsync(roleId);
+
+                var userIds = role.Users.Select(x => x.UserId).ToList();
+                users = users.Where(x => userIds.Contains(x.Id));
             }
             return users.Count();
         }
-
-
 
 
         //Here to Read from the model
@@ -217,60 +222,51 @@ namespace ResortPlay.Areas.Dashboard.Controllers
         }
 
 
-        //Here to Read from the model
+        //The User Roles Controller. Taking id from the roles and shows the roles
         [HttpGet]
         public async Task<ActionResult> UserRoles(string Id)
         {
             
             UserRolesModel model = new UserRolesModel();
-            model.Roles = RoleManager.Roles.ToList();
 
+            model.UserId = Id;
             var user = await UserManager.FindByIdAsync(Id);
             var UserRolesIds = user.Roles.Select(x => x.RoleId).ToList();
             model.UserRoles = RoleManager.Roles.Where(x => UserRolesIds.Contains(x.Id)).ToList();
+
+            model.Roles = RoleManager.Roles.Where(x => !UserRolesIds.Contains(x.Id)).ToList();
 
             return PartialView("_UserRoles", model);
         }
         //Here to make an action
         [HttpPost]
-        public async Task<JsonResult> UserRoles(UserActionModel model)
+        public async Task<JsonResult> UserRoleOperation(string userId, string roleId, bool isDelete = false)
         {
-
             JsonResult json = new JsonResult();
-            IdentityResult result = null;
+            var user = await UserManager.FindByIdAsync(userId);
+            var role = await RoleManager.FindByIdAsync(roleId);
 
-            if (!string.IsNullOrEmpty(model.Id)) //Edit a record
+            if (user != null && role != null)
             {
-                var user = await UserManager.FindByIdAsync(model.Id);
-
-                user.FullName = model.FullName;
-                user.Email = model.Email;
-                user.UserName = model.Username;
-
-                user.Country = model.Country;
-                user.City = model.City;
-                user.Address = model.Address;
-
-                result = await UserManager.UpdateAsync(user);
+                IdentityResult result = null;
+                if (!isDelete)
+                {
+                    result = await UserManager.AddToRoleAsync(userId, role.Name);
+                }
+                else
+                {
+                    result = await UserManager.RemoveFromRoleAsync(userId, role.Name);
+                }
+                
+                json.Data = new { Success = result.Succeeded, Message = string.Join(", ", result.Errors)};
             }
-            else //Create a record
+            else
             {
-
-                var user = new HMS_User();
-
-                user.FullName = model.FullName;
-                user.Email = model.Email;
-                user.UserName = model.Username;
-
-                user.Country = model.Country;
-                user.City = model.City;
-                user.Address = model.Address;
-
-                result = await UserManager.CreateAsync(user);
+                json.Data = new { Success = false, Message = "Invalid operation! " };
             }
 
-            json.Data = new { Success = result.Succeeded, Message = string.Join(", ", result.Errors) };
             return json;
+
         }
     }
 }
