@@ -19,11 +19,7 @@
                     <tr>
                         <td>@users.UserName</td>
                         <td>@users.Email</td>
-                        <td>
-                            @*@if (accomodation.AccomodationPackage != null)
-                            {
-                                @accomodation.AccomodationPackage.Name
-                            }*@
+                        <td>                   
                             -
                         </td>
 
@@ -35,6 +31,10 @@
                             <!--Delete button-->
                             <button data-href="@Url.Action("Delete", "Users", new {ID = users.Id })" type="button" class="data-btn btn btn-danger" data-toggle="modal" data-target="#popupWindow" aria-pressed="false" autocomplete="off">
                                 Delete <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                            <!--Role button-->
+                            <button data-href="@Url.Action("UserRoles", "Users", new {ID = users.Id })" type="button" class="data-btn btn btn-info" data-toggle="modal" data-target="#popupWindow" aria-pressed="false" autocomplete="off">
+                                Roles <i class="fa-solid fa-users-gear"></i>
                             </button>
                         </td>
                     </tr>
