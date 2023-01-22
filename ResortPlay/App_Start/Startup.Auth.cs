@@ -8,6 +8,7 @@ using Owin;
 using ResortPlay.Data;
 using ResortPlay.Entity;
 using ResortPlay.Models;
+using Services;
 
 namespace ResortPlay
 {
@@ -18,8 +19,8 @@ namespace ResortPlay
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
             app.CreatePerOwinContext(ResortPlayContext.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            app.CreatePerOwinContext<HMSUserManager>(HMSUserManager.Create);
+            app.CreatePerOwinContext<HMSSignInManager>(HMSSignInManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -32,7 +33,7 @@ namespace ResortPlay
                 {
                     // Enables the application to validate the security stamp when the user logs in.
                     // This is a security feature which is used when you change a password or add an external login to your account.  
-                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, HMS_User>(
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<HMSUserManager, HMS_User>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }

@@ -10,30 +10,31 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ResortPlay.Entity;
 using ResortPlay.Models;
+using Services;
 
 namespace ResortPlay.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private HMSSignInManager _signInManager;
+        private HMSUserManager _userManager;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(HMSUserManager userManager, HMSSignInManager signInManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
-        public ApplicationSignInManager SignInManager
+        public HMSSignInManager SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager ?? HttpContext.GetOwinContext().Get<HMSSignInManager>();
             }
             private set 
             { 
@@ -41,11 +42,11 @@ namespace ResortPlay.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
+        public HMSUserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<HMSUserManager>();
             }
             private set
             {
@@ -91,7 +92,7 @@ namespace ResortPlay.Controllers
                     return View(model);
             }
         }
-
+            
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
