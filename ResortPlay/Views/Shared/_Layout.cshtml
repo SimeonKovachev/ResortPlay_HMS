@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/15484bcc60.js" crossorigin="anonymous"></script>
 
     <title>@ViewBag.Title ResortPlay HMS</title>
 
@@ -16,7 +17,7 @@
     <link rel="stylesheet" href="~/Content/css/templatemo-572-designer.css">
     <link rel="stylesheet" href="~/Content/css/owl.css">
     <link rel="stylesheet" href="~/Content/css/animate.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
 </head>
 
 
@@ -47,9 +48,9 @@
         <nav class="main-navigation navbar navbar-expand-lg navbar-light">
             <div class="container">
                 <div>
-                <a style="color:white;" class="navbar-brand" href="index.html">
-                    ResortPlay
-                </a>
+                    <a style="color:white;" class="navbar-brand" href="index.html">
+                        ResortPlay
+                    </a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -69,12 +70,26 @@
                             <a class="nav-link" href="@Url.Action("Index", "Dashboard")">Dashboard</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Contact", "Home")">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Contact", "Home")">Login</a>
-                        </li>
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Register", "Account")">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Login", "Account")">Login</a>
+                            </li>
+                        }
+                        else
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Manage")">Hi! @User.Identity.Name</a>
+                            </li>
+                            <li class="nav-item active"><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Logout<i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+
+                        }
+
 
                     </ul>
                 </div>
@@ -87,6 +102,8 @@
     <div>
         @RenderBody();
     </div>
+
+
 
     <footer>
         <div class="container">
@@ -186,6 +203,10 @@
     </footer>
 
 
+    @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+    }
 
     <!-- Scripts -->
     <!-- Bootstrap core JavaScript -->
@@ -200,14 +221,15 @@
     <script src="~/Scripts/js/custom.js"></script>
     <!--Loader script-->
     <script>
-    setTimeout(function(){
-        $('.loader').fadeToggle();
-    }, 1500);
+        setTimeout(function () {
+            $('.loader').fadeToggle();
+        }, 1500);
 
-	$("a[href='#top']").click(function() {
-        $("html, body").animate({ scrollTop: 0 }, "slow");
-        return false;
-    });
+        $("a[href='#top']").click(function () {
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        });
     </script>
 </body>
+
 </html>
