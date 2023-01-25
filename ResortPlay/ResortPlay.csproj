@@ -218,6 +218,7 @@
     <Content Include="Content\css\flex-slider.css" />
     <Content Include="Content\css\fontawesome.css" />
     <Content Include="Content\css\owl.css" />
+    <Content Include="Content\css\style.css" />
     <Content Include="Content\css\templatemo-572-designer.css" />
     <Content Include="Content\images\banner-bg.jpg" />
     <Content Include="Content\images\contact-us-bg.jpg" />
