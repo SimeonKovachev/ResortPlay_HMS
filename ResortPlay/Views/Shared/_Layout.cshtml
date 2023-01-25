@@ -45,75 +45,57 @@
     </div>
 
     <header id="#top">
+        <nav class="main-navigation navbar navbar-expand-lg navbar-light">
 
-           
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm">
-                            <p class="site">www.yoursitehere.com</p>
-                        </div>
-                        <div class="col-sm text-right">
-                            <p class="num">Call: +01-123-456</p>
-                            <ul class="social-links">
-                                <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
+            <div class="container">
+                <div>
+                    <a style="color:white;" class="navbar-brand" href="index.html">
+                        ResortPlay
+                    </a>
                 </div>
-           
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav" id="navbarActive">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Home")">Homepage</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("About", "Home")">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Contact", "Home")">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Dashboard")">Dashboard</a>
+                        </li>
 
-            <nav class="main-navigation navbar navbar-expand-lg navbar-light">
-                <div class="container">
-                    <div>
-                        <a style="color:white;" class="navbar-brand" href="index.html">
-                            ResortPlay
-                        </a>
-                    </div>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav" id="navbarActive">
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+
                             <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("Index", "Home")">Homepage</a>
+                                <a class="nav-link" href="@Url.Action("Register", "Account")">Register</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("About", "Home")">About Us</a>
+                                <a class="nav-link" href="@Url.Action("Login", "Account")">Login</a>
                             </li>
+                        }
+                        else
+                        {
+
                             <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("Contact", "Home")">Contact Us</a>
+                                <a class="nav-link" href="@Url.Action("Index", "Manage")">Hi! @User.Identity.Name</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("Index", "Dashboard")">Dashboard</a>
-                            </li>
+                            <li class="nav-item active"><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Logout<i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
 
-                            @if (!User.Identity.IsAuthenticated)
-                            {
-
-                                <li class="nav-item">
-                                    <a class="nav-link" href="@Url.Action("Register", "Account")">Register</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="@Url.Action("Login", "Account")">Login</a>
-                                </li>
-                            }
-                            else
-                            {
-
-                                <li class="nav-item">
-                                    <a class="nav-link" href="@Url.Action("Index", "Manage")">Hi! @User.Identity.Name</a>
-                                </li>
-                                <li class="nav-item active"><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Logout<i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
-
-                            }
+                        }
 
 
-                        </ul>
-                    </div>
+                    </ul>
                 </div>
-            </nav>
+            </div>
+        </nav>
 
     </header>
 
@@ -251,26 +233,26 @@
     </script>
 
     @*<script>
-        let prevButton = null;
-        const wrapper = document.getElementById("navbarNav");
-        debugger
-        wrapper.addEventListener('click', (e) => {
-            const isButton = e.target.nodeName === 'BUTTON';
+            let prevButton = null;
+            const wrapper = document.getElementById("navbarNav");
+            debugger
+            wrapper.addEventListener('click', (e) => {
+                const isButton = e.target.nodeName === 'BUTTON';
 
-            if (!isButton) {
-                return;
-            }
+                if (!isButton) {
+                    return;
+                }
 
-            e.target.classList.add('active'); // Add .active CSS Class
+                e.target.classList.add('active'); // Add .active CSS Class
 
-            if (prevButton !== null) {
-                prevButton.classList.remove('active');  // Remove .active CSS Class
-            }
+                if (prevButton !== null) {
+                    prevButton.classList.remove('active');  // Remove .active CSS Class
+                }
 
-            prevButton = e.target;
+                prevButton = e.target;
 
-        })
-    </script>*@
+            })
+        </script>*@
 
 </body>
 
