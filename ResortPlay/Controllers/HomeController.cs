@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ResortPlay.ViewModels;
+using Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,21 +12,13 @@ namespace ResortPlay.Controllers
     {
         public ActionResult Index()
         {
-            return View();
-        }
+            HomeViewModel model = new HomeViewModel();
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+            AccomodationTypesService service = new AccomodationTypesService();
 
-            return View();
-        }
+            model.AccomodationTypes = service.GetAllAccomodationTypes(); 
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(model);
         }
     }
 }
